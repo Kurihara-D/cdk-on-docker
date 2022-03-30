@@ -28,6 +28,8 @@
     "@aws-cdk/core:target-partitions": [
       "aws",
       "aws-cn"
-    ]
+    ],
+    "systemName": "cdk_trial",
+    "envType": "staging"
   }
 }
