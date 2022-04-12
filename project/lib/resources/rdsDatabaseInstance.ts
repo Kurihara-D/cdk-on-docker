@@ -51,7 +51,7 @@ export class RdsDatabaseInstance extends Resource {
           },
         });
 
-      const rdsCredential = Credentials.fromGeneratedSecret(`${envType}_root`, {
+      const credentials = Credentials.fromGeneratedSecret(`${envType}_root`, {
         secretName: `${envType}/db/credentials`,
       });
 
@@ -61,7 +61,7 @@ export class RdsDatabaseInstance extends Resource {
           engine: DatabaseInstanceEngine.mysql({version: MysqlEngineVersion.VER_5_7_34}),
           instanceType: InstanceType.of(InstanceClass.T3, InstanceSize.SMALL),
           parameterGroup,
-          credentials: rdsCredential,
+          credentials,
           vpc: this.vpc,
           vpcSubnets: this.vpc.selectSubnets( { onePerAz:true, subnetGroupName: 'rds' } ),
           securityGroups: [dbSg],

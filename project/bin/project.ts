@@ -9,7 +9,7 @@ new MainStack(app, 'MainStack', {
   
   stackName: `main-stack-${envType}`,
   env: { 
-    account: '683019620152', 
-    region: 'us-east-1' 
+    account: '683019620152',
+    region: 'us-east-1' ,
   },
 });
