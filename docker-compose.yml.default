@@ -8,6 +8,7 @@ services:
       AWS_SECRET_ACCESS_KEY: ''
       AWS_REGION: 'us-east-1'
       AWS_ACCESS_KEY_ID: ''
+      AWS_ACCOUNT: ''
     tty: true
     volumes:
       - .:/app
