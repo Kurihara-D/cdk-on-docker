@@ -57,7 +57,7 @@ export class RdsDatabaseInstance extends Resource {
 
       new DatabaseInstance(scope, 'DbInstance', {
           databaseName: `${systemName}_${envType}`,
-          instanceIdentifier: `${systemName}-${envType}-db-instance`,
+          instanceIdentifier: `${envType}-db-instance`,
           engine: DatabaseInstanceEngine.mysql({version: MysqlEngineVersion.VER_5_7_34}),
           instanceType: InstanceType.of(InstanceClass.T3, InstanceSize.SMALL),
           parameterGroup,
