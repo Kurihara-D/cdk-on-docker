@@ -21,6 +21,7 @@ import {
 export class RdsDatabaseInstance extends Resource {
  
     private readonly vpc: Vpc;
+    public rds: DatabaseInstance;
 
     constructor(vpc: Vpc) {
       super();
@@ -55,7 +56,7 @@ export class RdsDatabaseInstance extends Resource {
         secretName: `${envType}/db/credentials`,
       });
 
-      new DatabaseInstance(scope, 'DbInstance', {
+      this.rds = new DatabaseInstance(scope, 'DbInstance', {
           databaseName: `${systemName}_${envType}`,
           instanceIdentifier: `${envType}-db-instance`,
           engine: DatabaseInstanceEngine.mysql({version: MysqlEngineVersion.VER_5_7_34}),
@@ -66,6 +67,7 @@ export class RdsDatabaseInstance extends Resource {
           vpcSubnets: this.vpc.selectSubnets( { onePerAz:true, subnetGroupName: 'rds' } ),
           securityGroups: [dbSg],
           port: 3306,
+          multiAz: true,
       })   
     }
 }
