@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { VpcStack } from './vpc-stack';
 import { BastionStack } from './bastion-stack';
 import { RdsStack } from './rds-stack';
+import { FargateStack } from './fargate-stack';
 
 export class MainStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -17,8 +18,12 @@ export class MainStack extends Stack {
         stackName: `bastion-stack-${envType}`
     })
 
-    new RdsStack(scope, 'RdsStack', vpcStack.vpc, {
+    const rdsStack = new RdsStack(scope, 'RdsStack', vpcStack.vpc, {
         stackName: `rds-stack-${envType}`
+    })
+
+    new FargateStack(scope,'FargateStack', vpcStack.vpc, rdsStack.rds, {
+      stackName: `fargate-stack-${envType}`
     })
   }
 }
