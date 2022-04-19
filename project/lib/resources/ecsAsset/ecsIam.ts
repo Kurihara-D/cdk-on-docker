@@ -29,6 +29,7 @@ export class EcsIam extends Resource {
           ],
         });
 
+        // ecs exec 用のRoleも入れてる
         this.ecsTaskExecutionRole.addToPrincipalPolicy(
             new PolicyStatement({
                 actions: [
