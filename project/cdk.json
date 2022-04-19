@@ -30,6 +30,9 @@
       "aws-cn"
     ],
     "systemName": "cdk_trial",
-    "envType": "staging"
+    "envType": "staging",
+    "zoneName": "",
+    "hostedZoneId": "",
+    "stagingCertificate": ""
   }
 }
