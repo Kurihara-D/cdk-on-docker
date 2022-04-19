@@ -44,6 +44,7 @@ export class VpcSet extends Resource {
 
     this.vpc = new Vpc(scope, "vpc", {
       cidr: "172.16.0.0/17",
+      natGateways: 0,
       enableDnsHostnames: true,
       enableDnsSupport: true,
       maxAzs: 3,
