@@ -17,6 +17,10 @@ mkdir yourProject && cd yourProject
 ```
 
 ```bash
+npm i
+```
+
+```bash
 cdk init --language=typescript
 ```
 
