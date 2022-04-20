@@ -49,7 +49,7 @@ export class AlbFargateService extends Resource {
             `${envType}Certificate`
         );
     
-        let desiredCount = 2
+        let desiredCount = 1
         if (envType == 'staging') {
             desiredCount = 1
         }
