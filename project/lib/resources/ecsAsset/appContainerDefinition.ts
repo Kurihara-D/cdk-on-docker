@@ -29,13 +29,12 @@ export class AppContainerDefinition extends Resource {
     constructor(
         taskDefinition: FargateTaskDefinition,
         logGrp: LogGroup,
-        rds: DatabaseInstance
+        rds: DatabaseInstance,
       ) {
         super();
-        this.taskDefinition = taskDefinition;
-        this.logGrp = logGrp;
+        this.taskDefinition = taskDefinition
+        this.logGrp = logGrp
         this.rds = rds
-        
       }
       createResources(scope: Construct) {
         const systemName = scope.node.tryGetContext("systemName");
@@ -72,7 +71,7 @@ export class AppContainerDefinition extends Resource {
           environment: {
             RAILS_LOG_TO_STDOUT: envType,
             SECRET_KEY_BASE: "secret-sss",
-            RAILS_ENV: 'production',
+            RAILS_ENV: envType,
             RAILS_MASTER_KEY: credential,
             DATABASE_HOST: this.rds.instanceEndpoint.hostname,
             DATABASE_PASSWORD: dbCredentials.secretValueFromJson("password").toString(),
