@@ -15,6 +15,7 @@ import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { Secret } from "aws-cdk-lib/aws-secretsmanager";
 import { DatabaseInstance } from "aws-cdk-lib/aws-rds";
+import { CfnReplicationGroup } from "aws-cdk-lib/aws-elasticache";
 import { Bucket } from "aws-cdk-lib/aws-s3";
 
 export class AppContainerDefinition extends Resource {
@@ -25,16 +26,19 @@ export class AppContainerDefinition extends Resource {
     private readonly taskDefinition: FargateTaskDefinition
     private readonly logGrp: LogGroup
     private readonly rds: DatabaseInstance
+    private readonly elasticach: CfnReplicationGroup
 
     constructor(
         taskDefinition: FargateTaskDefinition,
         logGrp: LogGroup,
         rds: DatabaseInstance,
+        elasticach: CfnReplicationGroup
       ) {
         super();
         this.taskDefinition = taskDefinition
         this.logGrp = logGrp
         this.rds = rds
+        this.elasticach = elasticach
       }
       createResources(scope: Construct) {
         const systemName = scope.node.tryGetContext("systemName");
@@ -73,6 +77,8 @@ export class AppContainerDefinition extends Resource {
             SECRET_KEY_BASE: "secret-sss",
             RAILS_ENV: envType,
             RAILS_MASTER_KEY: credential,
+            REDIS_HOST: this.elasticach.attrPrimaryEndPointAddress,
+            REDIS_PORT: this.elasticach.attrPrimaryEndPointPort,
             DATABASE_HOST: this.rds.instanceEndpoint.hostname,
             DATABASE_PASSWORD: dbCredentials.secretValueFromJson("password").toString(),
             DATABASE_USERNAME: dbCredentials.secretValueFromJson("username").toString(),
