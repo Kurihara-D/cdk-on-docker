@@ -1,9 +1,9 @@
-import { Resource } from "../abstract/resource";
+import { Resource } from "./abstract/resource";
 import { Construct } from "constructs";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import { RemovalPolicy } from "aws-cdk-lib";
 
-export class EcsLogGroup extends Resource {
+export class CommonLogGroup extends Resource {
     public logGrp: LogGroup;
     private readonly type: string;
 

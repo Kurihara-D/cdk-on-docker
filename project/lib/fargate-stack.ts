@@ -4,7 +4,7 @@ import { Construct } from "constructs";
 import { EcsCluster } from './resources/ecsAsset/ecsCluster';
 import { EcsIam } from "./resources/ecsAsset/ecsIam";
 import { TaskDefinition } from "./resources/ecsAsset/taskDefinition";
-import { EcsLogGroup } from "./resources/ecsAsset/ecsLogGroup";
+import { CommonLogGroup } from "./resources/commonLogGroup";
 import { DatabaseInstance } from "aws-cdk-lib/aws-rds";
 import { AppContainerDefinition } from "./resources/ecsAsset/appContainerDefinition";
 import { AlbFargateService } from "./resources/ecsAsset/albFargateService";
@@ -30,7 +30,7 @@ export class FargateStack extends Stack {
         const taskDefinition = new TaskDefinition(ecsIam.ecsTaskExecutionRole)
         taskDefinition.createResources(this)
 
-        const ecsLogGroup = new EcsLogGroup('app-nginx')
+        const ecsLogGroup = new CommonLogGroup('app-nginx')
         ecsLogGroup.createResources(this)
 
         const appContainerDef = new AppContainerDefinition(taskDefinition.taskDef, ecsLogGroup.logGrp, rds)
