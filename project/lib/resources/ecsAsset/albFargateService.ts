@@ -46,7 +46,7 @@ export class AlbFargateService extends Resource {
         const certificate = Certificate.fromCertificateArn(
             scope,
             "Cert",
-            `${envType}Certificate`
+            scope.node.tryGetContext(`${envType}Certificate`)
         );
     
         let desiredCount = 1
