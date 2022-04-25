@@ -1,6 +1,6 @@
 import { Resource } from "../abstract/resource";
 import { Construct } from "constructs";
-import { SecurityGroup, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { SecurityGroup } from "aws-cdk-lib/aws-ec2";
 import { Cluster, FargateTaskDefinition, CfnService, FargateService } from "aws-cdk-lib/aws-ecs";
 import { ApplicationLoadBalancedFargateService } from "aws-cdk-lib/aws-ecs-patterns";
 import { HostedZone } from "aws-cdk-lib/aws-route53";
