@@ -6,6 +6,7 @@ import { EcsIam } from "./resources/ecsAsset/ecsIam";
 import { TaskDefinition } from "./resources/ecsAsset/taskDefinition";
 import { CommonLogGroup } from "./resources/commonLogGroup";
 import { DatabaseInstance } from "aws-cdk-lib/aws-rds";
+import { CfnReplicationGroup } from "aws-cdk-lib/aws-elasticache";
 import { AppContainerDefinition } from "./resources/ecsAsset/appContainerDefinition";
 import { AlbFargateService } from "./resources/ecsAsset/albFargateService";
 
@@ -13,7 +14,7 @@ import { SecurityGroup, Peer, Port } from "aws-cdk-lib/aws-ec2";
 
 
 export class FargateStack extends Stack {
-    constructor(scope: Construct, id: string, vpc: Vpc, rds: DatabaseInstance, props?: StackProps) {
+    constructor(scope: Construct, id: string, vpc: Vpc, rds: DatabaseInstance, elastiCache: CfnReplicationGroup, props?: StackProps) {
         super(scope, id, props)
 
         // public subnetだから別にいらない
@@ -33,7 +34,7 @@ export class FargateStack extends Stack {
         const ecsLogGroup = new CommonLogGroup('app-nginx')
         ecsLogGroup.createResources(this)
 
-        const appContainerDef = new AppContainerDefinition(taskDefinition.taskDef, ecsLogGroup.logGrp, rds)
+        const appContainerDef = new AppContainerDefinition(taskDefinition.taskDef, ecsLogGroup.logGrp, rds, elastiCache)
         appContainerDef.createResources(this)
 
         const albFargateService = new AlbFargateService(ecsCluster.cluster, taskDefinition.taskDef, [albSg], vpc)

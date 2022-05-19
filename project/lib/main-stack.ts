@@ -3,6 +3,7 @@ import { Construct } from 'constructs';
 import { VpcStack } from './vpc-stack';
 import { BastionStack } from './bastion-stack';
 import { RdsStack } from './rds-stack';
+import { ElastiCacheStack } from './elasti-cache-stack';
 import { FargateStack } from './fargate-stack';
 
 export class MainStack extends Stack {
@@ -22,7 +23,11 @@ export class MainStack extends Stack {
         stackName: `rds-stack-${envType}`
     })
 
-    new FargateStack(scope,'FargateStack', vpcStack.vpc, rdsStack.rds, {
+    const elastiCacheStack = new ElastiCacheStack(scope, 'ElastiCacheStack', vpcStack.vpc, {
+      stackName: `elasti-cache-satck-${envType}`
+    })
+
+    new FargateStack(scope,'FargateStack', vpcStack.vpc, rdsStack.rds, elastiCacheStack.elasiCache, {
       stackName: `fargate-stack-${envType}`
     })
   }
